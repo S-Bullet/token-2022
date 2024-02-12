@@ -121,7 +121,27 @@ async function main() {
     console.log("Tokens Transfered:", generateExplorerTxUrl(transferSig));
     
     // Step 5 - Fetch Fee Accounts
+    const allAccounts = await connection.getProgramAccounts(TOKEN_2022_PROGRAM_ID, {
+        commitment: 'confirmed',
+        filters: [
+            {
+                memcmp: {
+                    offset: 0,
+                    bytes: mint.toString(),
+                },
+            },
+        ],
+    });
 
+    const accountsToWithdrawFrom: PublicKey[] = [];
+    for (const accountInfo of allAccounts) {
+        const account = unpackAccount(accountInfo.pubkey, accountInfo.account, TOKEN_2022_PROGRAM_ID);
+        const transferFeeAmount = getTransferFeeAmount(account);
+        if (transferFeeAmount !== null && transferFeeAmount.withheldAmount > BigInt(0)) {
+            accountsToWithdrawFrom.push(accountInfo.pubkey);
+        }
+    }
+    
     // Step 6 - Harvest Fees
 }
 // Execute the main function
