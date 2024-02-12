@@ -141,8 +141,22 @@ async function main() {
             accountsToWithdrawFrom.push(accountInfo.pubkey);
         }
     }
-    
+
     // Step 6 - Harvest Fees
+    const feeVault = Keypair.generate();
+    const feeVaultAccount = await createAssociatedTokenAccountIdempotent(connection, payer, mint, feeVault.publicKey, {}, TOKEN_2022_PROGRAM_ID);
+
+    const withdrawSig1 = await withdrawWithheldTokensFromAccounts(
+        connection,
+        payer,
+        mint,
+        feeVaultAccount,
+        withdrawWithheldAuthority,
+        [],
+        accountsToWithdrawFrom
+    );
+    console.log("Withdraw from Accounts:", generateExplorerTxUrl(withdrawSig1));
+    
 }
 // Execute the main function
 main();
