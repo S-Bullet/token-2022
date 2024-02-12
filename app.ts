@@ -156,6 +156,20 @@ async function main() {
         accountsToWithdrawFrom
     );
     console.log("Withdraw from Accounts:", generateExplorerTxUrl(withdrawSig1));
+    ///*
+    const harvestSig = await harvestWithheldTokensToMint(connection, payer, mint, [destinationAccount]);
+    console.log("Harvest by Owner:", generateExplorerTxUrl(harvestSig));
+
+    // Tokens that have been harvested to Mint can then be claimed by the authority 
+    const withdrawSig2 = await withdrawWithheldTokensFromMint(
+        connection,
+        payer,
+        mint,
+        feeVaultAccount,
+        withdrawWithheldAuthority,
+        []
+    );
+    console.log("Withdraw from Mint:", generateExplorerTxUrl(withdrawSig2)); //*/
     
 }
 // Execute the main function
