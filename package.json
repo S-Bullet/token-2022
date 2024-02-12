@@ -1,0 +1,17 @@
+{
+  "name": "token-2022",
+  "version": "1.0.0",
+  "description": "https://www.quicknode.com/guides/solana-development/spl-tokens/token-2022/transfer-fees",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "@solana/spl-token": "^0.4.0",
+    "@solana/web3.js": "^1.90.0",
+    "typescript": "^5.3.3"
+  }
+}
